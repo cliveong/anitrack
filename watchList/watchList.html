@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch List</title>
+    <link rel="stylesheet" href="./watchListStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="content">
+        <div class="navbar">
+            <div class="logo">
+                <img src="./images/aniLogo.png" alt="ANIMAHUB Logo">
+                ANIMAHUB
+            </div>
+            <div class="searchBar">
+                <input type="text" name="searchTitle" id="searchTitle" placeholder="Search">
+                <!-- <div class="random">
+                    <img src="./images/random.png" alt="Random icon">
+                    RANDOM
+                </div> -->
+            </div>
+        </div>
+        <div class="recommended">
+            <img src="./images/demon-slayer.jpg" alt="demon slayer poster">
+            <div class="description">
+                <div>Recommended</div>
+                <div>Demon Slayer: Kimetsu no Yaiba Entertainment District Arc</div>
+                <div>The devastation of the Mugen Train incident still weighs heavily on the members of the Demon Slayer Corps. Despite being given time to recover, life must go on, as the wicked never sleep: a vicious demon is terrorizing the alluring women of the Yoshiwara Entertainment District. The Sound Pillar, Tengen Uzui, and his three wives are on the case. However, when he soon loses contact with his spouses, Tengen fears the worst and enlists the help of Tanjirou Kamado, Zenitsu Agatsuma, and Inosuke Hashibira to infiltrate the district's most prominent houses and locate the depraved Upper Rank demon.</div>
+            </div>
+        </div>
+        <div class="watchList">
+            <div class="animeOrManga">
+                <div class="all">All</div>
+                <div class="animeOnly">Anime</div>
+                <div class="mangaOnly">Manga</div>
+            </div>
+            <div class="watchListThumbNail">
+                <div><img src="./images/v61_101.png" alt=""></div>
+                <div><img src="./images/v61_44.png" alt=""></div>
+                <div><img src="./images/v61_45.png" alt=""></div>
+                <div><img src="./images/v61_46.png" alt=""></div>
+                <div><img src="./images/v61_47.png" alt=""></div>
+                <div><img src="./images/v61_48.png" alt=""></div>
+            </div>
+        </div>
+        <div class="profile">
+            <div class="profileContents">
+                <img src="./images/rem-transparent.gif" alt="Rem finger spin gif">
+                <div>Welcome back TJH1816!</div>             
+            </div>
+        </div>
+        <div class="filters">
+            <div class="filterPanel">
+                <div class="year">
+                    <label for="yearSelect">Year:</label>
+                    <select name="yearSelect" id="yearSelect">
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                    <button>Go</button>
+                </div>
+                <div class="genre">
+                    <div>Genres</div>
+                    <div class="genreSelectors">
+                        <div>
+                            <input type="checkbox" name="Action" id="Action">   
+                            <label for="Action">Action</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Adventure" id="Adventure">
+                            <label for="Adventure">Adventure</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Comedy" id="Comedy">
+                            <label for="Comedy">Comedy</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Slice of Life" id="Slice of Life">
+                            <label for="Slice of Life">Slice of Life</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Supernatural" id="Supernatural">
+                            <label for="Supernatural">Supernatural</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Romance" id="Romance">
+                            <label for="Romance">Romance</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="Sci-Fi" id="Sci-Fi">
+                            <label for="Sci-Fi">Sci-Fi</label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./watchListStyle.css"></script>
+</body>
+</html>

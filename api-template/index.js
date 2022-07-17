@@ -28,7 +28,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
 
 // Define our query variables and values that will be used in the query request
 var variables = {
-    search: "demon slayer",
+    search: "Yuukaku-hen",
     page: 1,
     perPage: 10,
 };
