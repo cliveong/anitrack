@@ -179,27 +179,23 @@ body {
     margin-bottom: 20px;
 }
 
-.genre {
+.scorebox {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
+    font-size: 2rem;
 }
 
-.genre>:first-child {
+.scorebox>:first-child {
     margin-bottom: 10px;
     border-top: 2px solid white;
     border-bottom: 2px solid white;
     width: 100%;
-    text-align: center;
+    text-align: left;
     color: var(--red);
 }
 
-.genreSelectors {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px
-}
+
 
 input[type='checkbox'] {
     transform: scale(2.2);
