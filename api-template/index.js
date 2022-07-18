@@ -10,7 +10,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
       hasNextPage
       perPage
     }
-    media (id: $id, search: $search, type: ANIME) {
+    media (id: $id, search: $search) {
       id
       title {
         romaji
@@ -21,14 +21,38 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
           extraLarge
       }
       type
+      status
+      season
+      seasonYear
+      format
+      episodes
+      genres
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
+      averageScore
+      popularity
+      chapters
+      volumes
+      description
+      synonyms
     }
   }
 }
 `;
 
+// "Yuukaku-hen"
+
 // Define our query variables and values that will be used in the query request
 var variables = {
-    search: "Yuukaku-hen",
+    search: "we never learn",
     page: 1,
     perPage: 10,
 };
