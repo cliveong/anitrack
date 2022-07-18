@@ -128,15 +128,20 @@ body {
 
 .scorebox {
     padding: 30px;
+}
+
+.scorebox >div {
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     align-items: left;
     font-size: 1.6rem;
     background-color: var(--darkgrey);
 }
 
 
-.scorebox>:first-child {
+.scorebox>div>:first-child {
     margin-bottom: 10px;
     border-top: 2px solid white;
     border-bottom: 2px solid white;
