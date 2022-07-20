@@ -116,14 +116,38 @@ body {
     padding: 30px;
 }
 
-.writteninformation{
+.writtenInformation{
+    padding: 20px;
+    padding-top: 0px;
     background-color: var(--darkgrey);
-    font-size: 1.8rem;
 }
 
 .writteninformation>div{
-    font-size: 30px;
     padding: 16px 16px;
+}
+
+.synopsis {
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+
+.infoHeaders {
+    font-size: 2.2rem;
+    margin: 20px 0;
+}
+
+.genres {
+    display: flex;
+    gap: 16px;
+    font-size: 1.7rem;
+    flex-wrap: wrap;
+}
+
+.genreBars {
+    font-weight: 400;
+    background-color: #757575;
+    padding: 12px;
+    border-radius: 12px;
 }
 
 .scorebox {

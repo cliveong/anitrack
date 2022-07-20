@@ -27,6 +27,10 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
       format
       episodes
       genres
+      rankings {
+        rank
+      }
+      countryOfOrigin
       startDate {
         year
         month
@@ -43,6 +47,65 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
       volumes
       description
       synonyms
+      characters(page: 1, perPage: 6) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node { # The character data node
+            id
+            name {
+              first
+              last
+            }
+          }
+          role
+          voiceActors (language: JAPANESE) { # Array of voice actors of this character for the anime
+            id
+            name {
+              first
+              last
+            }
+          }
+        }
+      }
+      reviews(page: 1, perPage: 6) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            user {
+              name
+              avatar {
+                large
+              }
+            }
+            rating
+            score
+            summary
+          }
+        }
+      }
+      relations {
+        edges {
+          node {
+            title {
+              english
+            }
+            id
+            type
+          }
+        }
+      }
     }
   }
 }
