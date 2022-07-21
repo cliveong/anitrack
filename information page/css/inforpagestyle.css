@@ -38,6 +38,7 @@ body {
 
 .searchBar {
     font-size: 2rem;
+    margin-left: 10px;
 }
 
 #searchTitle {
@@ -175,9 +176,18 @@ body {
 }
 
 button {
-    font-size: 1.6rem;
-    background-color: #FFFF00;
-    border-radius: 5px;
-    width: 80px;
-    height: 40px;
+    margin-top: 30px;
+    width: 250px;
+    height: 80px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    font-family: "Audiowide";
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    background-color: white;
+    transition-duration: 0.2s;
+}
+
+button:hover {
+    background-color: #2C2C2C;
+    color: white;
 }

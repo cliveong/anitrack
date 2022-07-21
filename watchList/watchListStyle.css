@@ -38,6 +38,7 @@ body {
 
 .searchBar {
     font-size: 2rem;
+    margin-left: 10px;
 }
 
 .random {

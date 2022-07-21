@@ -1,244 +1,6 @@
-const itemInfo = 
-{
-    "id": 110229,
-    "title": {
-        "romaji": "Bokutachi wa Benkyou ga Dekinai!",
-        "english": "We Never Learn!: BOKUBEN Season 2",
-        "native": "ぼくたちは勉強ができない！"
-    },
-    "coverImage": {
-        "extraLarge": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx110229-uBjHp2cbXYVL.jpg"
-    },
-    "type": "ANIME",
-    "status": "FINISHED",
-    "season": "FALL",
-    "seasonYear": 2019,
-    "format": "TV",
-    "episodes": 13,
-    "genres": [
-        "Comedy",
-        "Ecchi",
-        "Romance",
-        "Slice of Life"
-    ],
-    "rankings": [
-        {
-            "rank": 48
-        },
-        {
-            "rank": 44
-        },
-        {
-            "rank": 15
-        },
-        {
-            "rank": 12
-        }
-    ],
-    "countryOfOrigin": "JP",
-    "startDate": {
-        "year": 2019,
-        "month": 10,
-        "day": 6
-    },
-    "endDate": {
-        "year": 2019,
-        "month": 12,
-        "day": 29
-    },
-    "averageScore": 72,
-    "popularity": 51097,
-    "chapters": null,
-    "volumes": null,
-    "description": "To get a scholarship, Nariyuki becomes a reluctant tutor to three unteachable girls. He must quickly make an art-lover adore mathematics, turn a literary genius into a bonafide scientist, and transform a top-tier athlete into a passing student.<br><br>(Source: HIDIVE)",
-    "synonyms": [
-        "BokuBen 2",
-        "We Never Learn 2",
-        "Boku-tachi wa Benkyou ga Dekinai 2nd Season",
-        "Boku-tachi wa Benkyou ga Dekinai!",
-        "เรื่องนี้ตําราไม่มีสอน ภาค 2"
-    ],
-    "characters": {
-        "pageInfo": {
-            "total": 500,
-            "perPage": 6,
-            "currentPage": 1,
-            "lastPage": 83,
-            "hasNextPage": true
-        },
-        "edges": [
-            {
-                "node": {
-                    "id": 121775,
-                    "name": {
-                        "first": "Fumino",
-                        "last": "Furuhashi"
-                    }
-                },
-                "role": "MAIN",
-                "voiceActors": [
-                    {
-                        "id": 112629,
-                        "name": {
-                            "first": "Haruka",
-                            "last": "Shiraishi"
-                        }
-                    }
-                ]
-            },
-            {
-                "node": {
-                    "id": 125599,
-                    "name": {
-                        "first": "Asumi",
-                        "last": "Kominami"
-                    }
-                },
-                "role": "MAIN",
-                "voiceActors": [
-                    {
-                        "id": 119812,
-                        "name": {
-                            "first": "Madoka",
-                            "last": "Asahina"
-                        }
-                    }
-                ]
-            },
-            {
-                "node": {
-                    "id": 125600,
-                    "name": {
-                        "first": "Mafuyu",
-                        "last": "Kirisu"
-                    }
-                },
-                "role": "MAIN",
-                "voiceActors": [
-                    {
-                        "id": 118806,
-                        "name": {
-                            "first": "Lynn",
-                            "last": ""
-                        }
-                    }
-                ]
-            },
-            {
-                "node": {
-                    "id": 121778,
-                    "name": {
-                        "first": "Uruka",
-                        "last": "Takemoto"
-                    }
-                },
-                "role": "MAIN",
-                "voiceActors": [
-                    {
-                        "id": 126963,
-                        "name": {
-                            "first": "Sayumi",
-                            "last": "Suzushiro"
-                        }
-                    }
-                ]
-            },
-            {
-                "node": {
-                    "id": 129715,
-                    "name": {
-                        "first": "Mizuki",
-                        "last": "Yuiga"
-                    }
-                },
-                "role": "SUPPORTING",
-                "voiceActors": [
-                    {
-                        "id": 119383,
-                        "name": {
-                            "first": "Marika",
-                            "last": "Kouno"
-                        }
-                    }
-                ]
-            },
-            {
-                "node": {
-                    "id": 121777,
-                    "name": {
-                        "first": "Nariyuki",
-                        "last": "Yuiga"
-                    }
-                },
-                "role": "MAIN",
-                "voiceActors": [
-                    {
-                        "id": 110743,
-                        "name": {
-                            "first": "Ryouta",
-                            "last": "Oosaka"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    "reviews": {
-        "pageInfo": {
-            "total": 1,
-            "perPage": 6,
-            "currentPage": 1,
-            "lastPage": 1,
-            "hasNextPage": false
-        },
-        "edges": [
-            {
-                "node": {
-                    "user": {
-                        "name": "omniumx",
-                        "avatar": {
-                            "large": "https://s4.anilist.co/file/anilistcdn/user/avatar/large/b426989-P2tgnNyQcL7t.png"
-                        }
-                    },
-                    "rating": 16,
-                    "score": 80,
-                    "summary": "Harem rom-com anime where the girls never learn."
-                }
-            }
-        ]
-    },
-    "relations": {
-        "edges": [
-            {
-                "node": {
-                    "title": {
-                        "english": "We Never Learn: BOKUBEN"
-                    },
-                    "id": 103900,
-                    "type": "ANIME"
-                }
-            },
-            {
-                "node": {
-                    "title": {
-                        "english": "We Never Learn"
-                    },
-                    "id": 98235,
-                    "type": "MANGA"
-                }
-            },
-            {
-                "node": {
-                    "title": {
-                        "english": "We Never Learn OVAs"
-                    },
-                    "id": 109492,
-                    "type": "ANIME"
-                }
-            }
-        ]
-    }
-}
+import { anime1 } from "../IndividualDummyData.js";
+
+const itemInfo = anime1();
 
 const renderTitle = () => {
     const picture = itemInfo.coverImage.extraLarge;
@@ -252,6 +14,20 @@ const renderTitle = () => {
 
     const title = document.querySelector(".itemTitle");
     title.textContent = name;
+
+    const btn = document.querySelector(".addToWatchList");
+    if (itemInfo.type === "ANIME") {
+        btn.textContent = "Add to watchlist";
+    } else {
+        btn.textContent = "Add to readlist";
+    }
+    btn.addEventListener("click", () => {
+        if (itemInfo.type === "ANIME") {
+            btn.textContent = "Added to watchlist";
+        } else {
+            btn.textContent = "Added to readlist";
+        }
+    })
 }
 
 const renderInformation = () => {
