@@ -1,6 +1,7 @@
-import { anime1 } from "../IndividualDummyData.js";
+import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyData.js";
 
-const itemInfo = anime1();
+const itemInfo = anime3;
+console.log(itemInfo);
 
 const renderTitle = () => {
     const picture = itemInfo.coverImage.extraLarge;
@@ -32,9 +33,9 @@ const renderTitle = () => {
 
 const renderInformation = () => {
     const summary =  itemInfo.description;
-    const newSummary = summary.replaceAll("<br>", " ");
+    //const newSummary = summary.replaceAll("<br>", " ");
     const synopsis = document.querySelector(".synopsis");
-    synopsis.textContent = newSummary;
+    synopsis.innerHTML = summary;
 
     generateGenres();
     generateRelations();
@@ -120,7 +121,11 @@ const renderScorebox = () => {
 
         let synoCollection = "Synonyms: ";
         for (let i = 0; i < itemInfo.synonyms.length; i++) {
-            synoCollection = synoCollection + ", " + itemInfo.synonyms[i];
+            if (i < 1) {
+                synoCollection = synoCollection + itemInfo.synonyms[i];
+            } else {
+                synoCollection = synoCollection + ", " + itemInfo.synonyms[i];
+            }
         }
         if (synoCollection.length > itemInfo.synonyms.length) {
             synonyms.textContent = synoCollection
@@ -154,13 +159,17 @@ const renderScorebox = () => {
 
         let synoCollection = "Synonyms: ";
         for (let i = 0; i < itemInfo.synonyms.length; i++) {
-            synoCollection = synoCollection + ", " + itemInfo.synonyms[i];
+            if (i < 1) {
+                synoCollection = synoCollection + itemInfo.synonyms[i];
+            } else {
+                synoCollection = synoCollection + ", " + itemInfo.synonyms[i];
+            }
         }
         if (synoCollection.length > itemInfo.synonyms.length) {
             synonyms.textContent = synoCollection
         }
-        volumes.textContent = itemVolumes;
-        chapters.textContent = itemChapters;
+        volumes.textContent = "Volumes: " + itemVolumes;
+        chapters.textContent = "Chapters: " + itemChapters;
     }
 
 }

@@ -1,3 +1,3 @@
-import {something} from "./index2";
+import {name} from "./index2.js";
 
-console.log(something);
+console.log(name);

@@ -164,12 +164,87 @@ body {
     width: 360px;
     height: 480px;
     /* aspect-ratio: 18/24; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    position: relative;  
+
+}
+
+.watchListThumbNail>div:before {
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;left:0;right:0;
+    background-color:rgba(0,0,0,0);
+}
+
+.watchListThumbNail>div:hover::before {
+    background-color:rgba(0,0,0,0.5);
+}
+
+.watchListThumbNail>div image {
+    display:block;
+}
+
+.watchListThumbNail>div .view {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    opacity:0;
+}
+
+.watchListThumbNail>div .read {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    opacity:0;
+}
+
+.watchListThumbNail>div .delete {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    opacity:0;
+}
+
+.watchListThumbNail>div:hover button {   
+    opacity: 1;
+}
+
+.watchListThumbNail>div>button {
+    font-family: "Audiowide";
+    width: 200px;
+    height: 80px;
+    font-size: 1.6rem;
+    border-radius: 10px;
+    background-color: white;
+    color: #360000;
+    transition-duration: 0.3s;
+}
+
+.watchListThumbNail>div>button:hover {
+    color: var(--red);
+    background-color: #360000;
 }
 
 .watchListThumbNail>div>img{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.hover {
+    display: inline;
 }
 
 .filters {
@@ -223,7 +298,7 @@ label[for="yearSelect"] {
     font-size: 1.8rem;
 }
 
-button {
+.year > button {
     font-size: 1.6rem;
     background-color: #FFFF00;
     border-radius: 5px;

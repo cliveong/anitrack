@@ -1,5 +1,4 @@
-const anime1 = () => {
-    return {
+const anime1 = {
         "id": 110229,
         "title": {
             "romaji": "Bokutachi wa Benkyou ga Dekinai!",
@@ -240,7 +239,7 @@ const anime1 = () => {
         }
     }
 
-}
+
 
 const anime2 = 
 {
@@ -1681,4 +1680,6 @@ const manga2 = {
     }
 }
 
-export {anime1};
+const allList = [anime1, anime2, anime3, anime4, manga1, manga2];
+
+export {anime1, anime2, anime3, anime4, manga1, manga2, allList};
