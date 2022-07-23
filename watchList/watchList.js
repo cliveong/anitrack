@@ -1,15 +1,18 @@
 import { allList } from "../IndividualDummyData.js";
 
+const unfinished = allList;
+const finished = [];
+
 const renderWatchList = (items) => {
     const listing = document.querySelector(".watchListThumbNail");
     while(listing.hasChildNodes()) {
         listing.removeChild(listing.lastChild);
     }
 
-    for(let i = 0; i < allList.length; i++) {
+    for(let i = 0; i < items.length; i++) {
         const container = document.createElement('div');
         const img = new Image();
-        img.src = allList[i].coverImage.extraLarge;
+        img.src = items[i].coverImage.extraLarge;
         container.appendChild(img);
         const readBtn = document.createElement("button");
         const deleteBtn = document.createElement("button");
@@ -19,7 +22,7 @@ const renderWatchList = (items) => {
         deleteBtn.className = "hover delete";
         deleteBtn.textContent = "Delete"
         markAsFinishBtn.className = "hover read";
-        if(allList[i].type === 'ANIME') {
+        if(items[i].type === 'ANIME') {
             markAsFinishBtn.textContent = "Mark as watched";
         } else {
             markAsFinishBtn.textContent = "Mark as read";
@@ -31,6 +34,27 @@ const renderWatchList = (items) => {
         listing.appendChild(container);
     }
 
+    console.log(123);
 
 }
-renderWatchList(allList);
+
+const tabs = () => {
+    const toFinishBtn = document.querySelector(".toFinish");
+    toFinishBtn.addEventListener("click", () => {
+        renderWatchList(unfinished);
+    });
+
+    const finishedBtn = document.querySelector(".completed");
+    finishedBtn.addEventListener("click", () => {
+        renderWatchList([]);
+    });
+
+    const bothBtn = document.querySelector(".all");
+    bothBtn.addEventListener("click", () => {
+        const tempArrayAll = unfinished.concat(finished);
+        renderWatchList(tempArrayAll);
+    });
+}
+
+renderWatchList(unfinished);
+tabs();

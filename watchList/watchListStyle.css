@@ -139,7 +139,7 @@ body {
     padding: 30px;
 }
 
-.animeOrManga {
+.tabs {
     display: flex;
     gap: 10px;
     font-size: 1.3rem;
@@ -148,7 +148,7 @@ body {
     margin-bottom: 20px;
 }
 
-.animeOrManga>div {
+.tabs>div {
     background-color: #2C2C2C;
     padding: 16px 16px;
 }
