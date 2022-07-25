@@ -148,9 +148,16 @@ body {
     margin-bottom: 20px;
 }
 
-.tabs>div {
+.tabs div {
     background-color: #2C2C2C;
     padding: 16px 16px;
+    text-align: center;
+}
+
+.tabs :first-child {
+    font-size: 1.8rem;
+    padding: 10px 10px;
+    background-color: gray;
 }
 
 .watchListThumbNail{
