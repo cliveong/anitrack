@@ -3,6 +3,7 @@ import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyDat
 const itemInfo = anime3;
 console.log(itemInfo);
 
+//Generate poster image and banner image of selected anime
 const renderTitle = () => {
     const picture = itemInfo.coverImage.extraLarge;
     const name = itemInfo.title.english;
@@ -11,7 +12,8 @@ const renderTitle = () => {
     mainPic.src = picture;
 
     const backgroundPic = document.querySelector(".description");
-    backgroundPic.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(${picture})`;
+    backgroundPic.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.8), 
+    rgba(0, 0, 0, 0.8) ), url(${picture})`;
 
     const title = document.querySelector(".itemTitle");
     title.textContent = name;
@@ -22,6 +24,8 @@ const renderTitle = () => {
     } else {
         btn.textContent = "Add to readlist";
     }
+
+    //TODO: Add to watchlist logic required
     btn.addEventListener("click", () => {
         if (itemInfo.type === "ANIME") {
             btn.textContent = "Added to watchlist";
@@ -31,6 +35,8 @@ const renderTitle = () => {
     })
 }
 
+
+//Adds the synopsis of content
 const renderInformation = () => {
     const summary =  itemInfo.description;
     //const newSummary = summary.replaceAll("<br>", " ");
@@ -41,6 +47,7 @@ const renderInformation = () => {
     generateRelations();
 }
 
+//Adds the genres of content
 const generateGenres = () => {
     const genreList =  itemInfo.genres;
     const genres = document.querySelector(".genres");
@@ -53,6 +60,7 @@ const generateGenres = () => {
     }
 }
 
+//Adds the relate manga/anime/source of content
 const generateRelations = () => {
     const relationsList = itemInfo.relations.edges;
     const relations = document.querySelector(".relations");
@@ -64,6 +72,8 @@ const generateRelations = () => {
     }
 };
 
+//Adds the misc info of content, content options changes
+//based on type (anime, manga)
 const renderScorebox = () => {
     const score = document.querySelector(".score");
     const ranked = document.querySelector(".ranked");
@@ -90,7 +100,6 @@ const renderScorebox = () => {
     const itemFormat = itemInfo.format;
     const itemVolumes = itemInfo.volumes;
     const itemChapters = itemInfo.chapters;
-    //const itemSynonyms = itemInfo.synonyms
 
     if (itemInfo.type === "ANIME") {
         score.style.display = "block";

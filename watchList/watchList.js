@@ -5,12 +5,17 @@ const finished = [allList[3], allList[4]];
 const both = unfinished.concat(finished);
 let mode = 0;
 
+//Render thumbnails in the watchlist based on list of "items"
 const renderWatchList = (items) => {
+
+    //Remove all current thumbnails
     const listing = document.querySelector(".watchListThumbNail");
     while(listing.hasChildNodes()) {
         listing.removeChild(listing.lastChild);
     }
 
+    //Generate thumbnails based on list and add onhover buttons
+    //TODO: Add eventlistener for buttons
     for(let i = 0; i < items.length; i++) {
         const container = document.createElement('div');
         const img = new Image();
@@ -37,6 +42,8 @@ const renderWatchList = (items) => {
     }
 }
 
+//Switchable tabs based on watch/read status 
+//(finished, unfinished, all etc)
 const tabs = () => {
     const toFinishBtn = document.querySelector(".toFinish");
     const finishedBtn = document.querySelector(".completed");
@@ -48,6 +55,8 @@ const tabs = () => {
     const largeBgColor = "gray";
     const normBgColor = "#2C2C2C";
 
+    //Renders the appropriate list and filters
+    //Changes styling to highlight selected
     toFinishBtn.addEventListener("click", () => {
         renderWatchList(unfinished);
         renderFilter(unfinished);
@@ -95,20 +104,29 @@ const tabs = () => {
     });
 }
 
+
+//Populate the filter panel base on 
+//whats currently in the generated list
 const renderFilter = (items) => {
     filterYear(items);
     filterGenres(items); 
 }
 
+//Finds all years avail for filtering
 const filterYear = (items) => {
+    
+    //Remove existing options
     const yearsAvail = document.querySelector("#yearSelect");
     yearsAvail.length = 0;
     
+    //Adds an all option
     const tempDiv = document.createElement('option');
     tempDiv.textContent = "All";
     tempDiv.value = "All";
     yearsAvail.appendChild(tempDiv);
     
+
+    //Finds list of years avail, prevents duplicates
     let tempYearList = [];
     for (let i = 0; i < items.length; i++) {
         if(!(items[i].seasonYear === null)) {
@@ -117,7 +135,8 @@ const filterYear = (items) => {
             }           
         }
     }
-    
+
+    //sort by year then added as options
     tempYearList.sort();
     for (let j = 0; j < tempYearList.length; j++) {
         const tempDiv = document.createElement('option');
@@ -127,12 +146,16 @@ const filterYear = (items) => {
     }
 }
 
+//Finds all genres avail for filtering
 const filterGenres = (items) => {
+
+    //Remove all current options
     const genresAvail = document.querySelector(".genreSelectors");
     while(genresAvail.hasChildNodes()) {
         genresAvail.removeChild(genresAvail.lastChild);
     }
     
+    //Finds list of genres avail, prevents duplicates
     let tempGenreList = [];
     for (let i = 0; i < items.length; i++) {
         if(!(items[i].genres === null) || (items[i].genres.length > 0)) {
@@ -144,6 +167,8 @@ const filterGenres = (items) => {
         }
     }
     
+    //Sort by year then added as options with checkbox
+    // and label
     tempGenreList.sort();
     for (let j = 0; j < tempGenreList.length; j++) {
         const tempDiv = document.createElement('div');
