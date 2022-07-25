@@ -5,6 +5,7 @@ body {
 
     font-family: 'Audiowide', cursive, sans-serif;
     width: 100vw;
+    max-width: 4096px;
     height: 100vh;
     background-color: var(--black);
     color: white;
@@ -90,6 +91,7 @@ body {
     background-color: #202020;
     width: 100%;
     padding: 30px;
+    overflow: clip;
 }
 
 .description > :first-child {
@@ -170,7 +172,6 @@ body {
 .watchListThumbNail>div{
     width: 360px;
     height: 480px;
-    /* aspect-ratio: 18/24; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -269,13 +270,13 @@ body {
     margin-bottom: 20px;
 }
 
-.genre {
+.genre, .type{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.genre>:first-child {
+.genre>:first-child, .type>:first-child {
     margin-bottom: 10px;
     border-top: 2px solid white;
     border-bottom: 2px solid white;
@@ -284,33 +285,47 @@ body {
     color: var(--red);
 }
 
-.genreSelectors {
+.genreSelectors ,.typeSelectors {
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
+    gap: 10px;
+    width: 100%;
 }
 
 input[type='checkbox'] {
     transform: scale(2.2);
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+input[id='Anime'], input[id='Manga']{
+    margin-right: 3px;
 }
 
 select {
     width: 100px;
-    height: 50px;
+    height: 38px;
     font-size: 1.4rem;
 }
 
-label[for="yearSelect"] {
+/* label[for="yearSelect"] {
     font-size: 1.8rem;
-}
+} */
 
 .year > button {
     font-size: 1.6rem;
-    background-color: #FFFF00;
+    background-color: white;
+    color: #360000;
     border-radius: 5px;
     width: 80px;
     height: 40px;
+    transition: 0.3s;
+}
+
+.year > button:hover {
+    background-color: #360000 ;
+    color: white;
 }
 
 .label {

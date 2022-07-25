@@ -1,7 +1,9 @@
 import { allList } from "../IndividualDummyData.js";
 
-const unfinished = allList;
-const finished = [];
+const unfinished = [allList[0], allList[1], allList[2], allList[5]];
+const finished = [allList[3], allList[4]];
+const both = unfinished.concat(finished);
+let mode = 0;
 
 const renderWatchList = (items) => {
     const listing = document.querySelector(".watchListThumbNail");
@@ -33,9 +35,6 @@ const renderWatchList = (items) => {
         container.appendChild(markAsFinishBtn);
         listing.appendChild(container);
     }
-
-    console.log(123);
-
 }
 
 const tabs = () => {
@@ -51,6 +50,8 @@ const tabs = () => {
 
     toFinishBtn.addEventListener("click", () => {
         renderWatchList(unfinished);
+        renderFilter(unfinished);
+        mode = 0;
         toFinishBtn.style.fontSize = largeText;
         toFinishBtn.style.padding = largePadding;
         toFinishBtn.style.backgroundColor = largeBgColor;
@@ -64,7 +65,9 @@ const tabs = () => {
     });
 
     finishedBtn.addEventListener("click", () => {
-        renderWatchList([]);
+        renderWatchList(finished);
+        renderFilter(finished);
+        mode = 1;
         toFinishBtn.style.fontSize = normalText;
         toFinishBtn.style.padding = normalPadding;
         toFinishBtn.style.backgroundColor = normBgColor;
@@ -77,8 +80,9 @@ const tabs = () => {
     });
 
     bothBtn.addEventListener("click", () => {
-        const tempArrayAll = unfinished.concat(finished);
-        renderWatchList(tempArrayAll);
+        renderWatchList(both);
+        renderFilter(both);
+        mode = 2;
         toFinishBtn.style.fontSize = normalText;
         toFinishBtn.style.padding = normalPadding;
         toFinishBtn.style.backgroundColor = normBgColor;
@@ -91,5 +95,77 @@ const tabs = () => {
     });
 }
 
+const renderFilter = (items) => {
+    filterYear(items);
+    filterGenres(items); 
+}
+
+const filterYear = (items) => {
+    const yearsAvail = document.querySelector("#yearSelect");
+    yearsAvail.length = 0;
+    
+    const tempDiv = document.createElement('option');
+    tempDiv.textContent = "All";
+    tempDiv.value = "All";
+    yearsAvail.appendChild(tempDiv);
+    
+    let tempYearList = [];
+    for (let i = 0; i < items.length; i++) {
+        if(!(items[i].seasonYear === null)) {
+            if (!tempYearList.includes(items[i].seasonYear)) {
+                tempYearList.push(items[i].seasonYear);
+            }           
+        }
+    }
+    
+    tempYearList.sort();
+    for (let j = 0; j < tempYearList.length; j++) {
+        const tempDiv = document.createElement('option');
+        tempDiv.textContent = tempYearList[j];
+        tempDiv.value = tempYearList[j];
+        yearsAvail.appendChild(tempDiv);  
+    }
+}
+
+const filterGenres = (items) => {
+    const genresAvail = document.querySelector(".genreSelectors");
+    while(genresAvail.hasChildNodes()) {
+        genresAvail.removeChild(genresAvail.lastChild);
+    }
+    
+    let tempGenreList = [];
+    for (let i = 0; i < items.length; i++) {
+        if(!(items[i].genres === null) || (items[i].genres.length > 0)) {
+            for (let k = 0; k < items[i].genres.length; k++) {
+                if (!tempGenreList.includes(items[i].genres[k])) {
+                    tempGenreList.push(items[i].genres[k]);
+                }           
+            }
+        }
+    }
+    
+    tempGenreList.sort();
+    for (let j = 0; j < tempGenreList.length; j++) {
+        const tempDiv = document.createElement('div');
+        const tempInput = document.createElement('input');
+        const tempLabel = document.createElement('label');
+        tempInput.type = "checkbox";
+        tempInput.name = tempGenreList[j];
+        tempInput.id = tempGenreList[j];
+        tempLabel.htmlFor = tempGenreList[j];
+        tempLabel.textContent = tempGenreList[j];
+
+        tempDiv.appendChild(tempInput);
+        tempDiv.appendChild(tempLabel);
+        genresAvail.appendChild(tempDiv);  
+    }
+}
+
+const filterLogic = (mode) => {
+
+}
+
+
 renderWatchList(unfinished);
+renderFilter(unfinished);
 tabs();
