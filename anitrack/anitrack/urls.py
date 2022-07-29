@@ -23,6 +23,7 @@ from app import views as app_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', app_view.index,name='index'),
     path('home/', app_view.home,name='home'),
     path('register/',user_view.register, name= 'register'),
     path('login/',auth_views.LoginView.as_view(template_name='usersapp/login.html'), name= 'login'),
