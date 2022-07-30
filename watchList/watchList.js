@@ -186,7 +186,64 @@ const filterGenres = (items) => {
     }
 }
 
+//Adds event listener to Go button and invokes immediately
+(function() {
+    const goBtn = document.querySelector("#go");
+    goBtn.addEventListener("click", () => {
+        filterLogic(mode);
+    })
+}())
+
+//Finds matching data based on user selected filters
+//Activates on "Go"
 const filterLogic = (mode) => {
+    let copy = null;
+
+    //Sets the tempcopy to filter
+    //Note this only makes a shallow copy
+    if (mode === 0) {
+        copy = unfinished;
+    } else if (mode === 1) {
+        copy = finished;
+    } else {
+        copy = both;
+    }
+    const arrayOfFilters =  document.querySelectorAll("input[type=checkbox]");
+    
+    //Filter by Anime/Manga
+    if (arrayOfFilters[0].checked && arrayOfFilters[1].checked) {
+        //no need filter
+    } else if (arrayOfFilters[0].checked) {
+        copy = copy.filter(element => element.type === "ANIME");
+    } else {
+        copy = copy.filter(element => element.type === "MANGA");
+    }
+    
+    //Check if any item in 1 list exist in another
+    const anyInList = (objectGenres, listOfGenres) => {
+        for(let i = 0; i < objectGenres.length; i++) {
+            if (listOfGenres.includes(objectGenres[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Filter by genres
+    let allGenresChosen = [];
+    if (arrayOfFilters.length > 2) {
+        for(let i = 0; i < arrayOfFilters.length; i++) {
+            if (!allGenresChosen.includes(arrayOfFilters[i].id) &&
+                arrayOfFilters[i].checked) {
+                allGenresChosen.push(arrayOfFilters[i].id);
+            }
+        }
+
+        copy = copy.filter(element => anyInList(element.genres, allGenresChosen));
+        console.log(copy);
+    }
+
+    renderWatchList(copy);
 
 }
 
