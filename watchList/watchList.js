@@ -18,27 +18,81 @@ const renderWatchList = (items) => {
     //TODO: Add eventlistener for buttons
     for(let i = 0; i < items.length; i++) {
         const container = document.createElement('div');
+        container.className = "a" + items[i].id;
         const img = new Image();
         img.src = items[i].coverImage.extraLarge;
         container.appendChild(img);
-        const readBtn = document.createElement("button");
+        const viewBtn = document.createElement("button");
         const deleteBtn = document.createElement("button");
-        const markAsFinishBtn = document.createElement("button");
-        readBtn.className = "hover view";
-        readBtn.textContent = "View"
+        viewBtn.className = "hover view";
+        viewBtn.textContent = "View"
         deleteBtn.className = "hover delete";
         deleteBtn.textContent = "Delete"
-        markAsFinishBtn.className = "hover read";
-        if(items[i].type === 'ANIME') {
-            markAsFinishBtn.textContent = "Mark as watched";
-        } else {
-            markAsFinishBtn.textContent = "Mark as read";
+        
+        deleteBtn.addEventListener("click", () => {
+            deleteListing(container.className);
+        });
+
+        container.appendChild(viewBtn);
+        container.appendChild(deleteBtn);
+
+        const unfinishedIdList = unfinished.map(element => element.id);
+        if (unfinishedIdList.includes(items[i].id)) {
+            const markAsFinishBtn = document.createElement("button");
+            markAsFinishBtn.className = "hover read";
+            if(items[i].type === 'ANIME') {
+                markAsFinishBtn.textContent = "Mark as watched";
+            } else {
+                markAsFinishBtn.textContent = "Mark as read";
+            }
+            
+            markAsFinishBtn.addEventListener("click", () => {
+                markAsFinishListing(container.className);
+            })
+
+            container.appendChild(markAsFinishBtn);
         }
 
-        container.appendChild(readBtn);
-        container.appendChild(deleteBtn);
-        container.appendChild(markAsFinishBtn);
         listing.appendChild(container);
+    }
+}
+
+//Remove item from watchlist and delete dom element
+const deleteListing = (listingId) => {
+    console.log(listingId);
+    const listing = document.querySelector(`.${listingId}`);
+    listing.parentElement.removeChild(listing);
+    for(let i = 0; i < finished.length; i++) {
+        if (finished[i].id === Number(listingId.substring(1))) {
+            finished.splice(i, 1);
+        }
+    }
+    for(let j = 0; j < unfinished.length; j++) {
+        if (unfinished[j].id === Number(listingId.substring(1))) {
+            unfinished.splice(j, 1);
+        }
+    }
+    for(let k = 0; k < both.length; k++) {
+        if (both[k].id === Number(listingId.substring(1))) {
+            both.splice(k, 1);
+        }
+    }
+}
+
+//Mark item as read watchlist and update dom element
+const markAsFinishListing = (listingId) => {
+    if (mode === 0) {
+        const listing = document.querySelector(`.${listingId}`);
+        listing.parentElement.removeChild(listing);
+    } else {
+        const listing = document.querySelector(`.${listingId} > .read`);
+        listing.parentElement.removeChild(listing);
+    }
+    for(let j = 0; j < unfinished.length; j++) {
+        if (unfinished[j].id === Number(listingId.substring(1))) {
+            finished.push(unfinished[j]);
+            unfinished.splice(j, 1);
+        }
     }
 }
 
@@ -241,6 +295,7 @@ const filterLogic = (mode) => {
 
         copy = copy.filter(element => anyInList(element.genres, allGenresChosen));
         console.log(copy);
+        console.log(unfinished);
     }
 
     renderWatchList(copy);
