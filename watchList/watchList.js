@@ -59,7 +59,6 @@ const renderWatchList = (items) => {
 
 //Remove item from watchlist and delete dom element
 const deleteListing = (listingId) => {
-    console.log(listingId);
     const listing = document.querySelector(`.${listingId}`);
     listing.parentElement.removeChild(listing);
     for(let i = 0; i < finished.length; i++) {
@@ -294,8 +293,6 @@ const filterLogic = (mode) => {
         }
 
         copy = copy.filter(element => anyInList(element.genres, allGenresChosen));
-        console.log(copy);
-        console.log(unfinished);
     }
 
     renderWatchList(copy);
