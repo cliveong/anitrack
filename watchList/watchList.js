@@ -1,13 +1,12 @@
 import { allList } from "../IndividualDummyData.js";
 
-const unfinished = [allList[0], allList[1], allList[2], allList[5]];
-const finished = [allList[3], allList[4]];
-const both = unfinished.concat(finished);
-let mode = 0;
+// const unfinished = [allList[0], allList[1], allList[2], allList[5]];
+// const finished = [allList[3], allList[4]];
+// const both = unfinished.concat(finished);
+// let mode = 0;
 
 //Render thumbnails in the watchlist based on list of "items"
-const renderWatchList = (items) => {
-
+const renderWatchList = (items, unfinished, finished) => {
     //Remove all current thumbnails
     const listing = document.querySelector(".watchListThumbNail");
     while(listing.hasChildNodes()) {
@@ -28,14 +27,18 @@ const renderWatchList = (items) => {
         viewBtn.textContent = "View"
         deleteBtn.className = "hover delete";
         deleteBtn.textContent = "Delete"
+
+        viewBtn.addEventListener("click", () => {
+            sessionStorage.setItem("toDis", JSON.stringify(items[i]));
+            window.location.href = "../information page/informationPage.html";
+        })
         
         deleteBtn.addEventListener("click", () => {
-            deleteListing(container.className);
+            deleteListing(container.className, unfinished, finished);
         });
 
         container.appendChild(viewBtn);
         container.appendChild(deleteBtn);
-
         const unfinishedIdList = unfinished.map(element => element.id);
         if (unfinishedIdList.includes(items[i].id)) {
             const markAsFinishBtn = document.createElement("button");
@@ -58,28 +61,25 @@ const renderWatchList = (items) => {
 }
 
 //Remove item from watchlist and delete dom element
-const deleteListing = (listingId) => {
+const deleteListing = (listingId, unfinished, finished) => {
     const listing = document.querySelector(`.${listingId}`);
     listing.parentElement.removeChild(listing);
-    for(let i = 0; i < finished.length; i++) {
-        if (finished[i].id === Number(listingId.substring(1))) {
-            finished.splice(i, 1);
+    for(let i = 0; i < unfinished.length; i++) {
+        if (unfinished[i].id === Number(listingId.substring(1))) {
+            unfinished.splice(i, 1);
+            localStorage.setItem("unfinished", JSON.stringify(unfinished));
         }
     }
-    for(let j = 0; j < unfinished.length; j++) {
-        if (unfinished[j].id === Number(listingId.substring(1))) {
-            unfinished.splice(j, 1);
-        }
-    }
-    for(let k = 0; k < both.length; k++) {
-        if (both[k].id === Number(listingId.substring(1))) {
-            both.splice(k, 1);
+    for(let j = 0; j < finished.length; j++) {
+        if (finished[j].id === Number(listingId.substring(1))) {
+            finished.splice(j, 1);
+            localStorage.setItem("finished", JSON.stringify(finished));
         }
     }
 }
 
 //Mark item as read watchlist and update dom element
-const markAsFinishListing = (listingId) => {
+const markAsFinishListing = (listingId, unfinished, finished) => {
     if (mode === 0) {
         const listing = document.querySelector(`.${listingId}`);
         listing.parentElement.removeChild(listing);
@@ -90,14 +90,16 @@ const markAsFinishListing = (listingId) => {
     for(let j = 0; j < unfinished.length; j++) {
         if (unfinished[j].id === Number(listingId.substring(1))) {
             finished.push(unfinished[j]);
+            localStorage.setItem("finished", JSON.stringify(finished));
             unfinished.splice(j, 1);
+            localStorage.setItem("unfinished", JSON.stringify(unfinished));
         }
     }
 }
 
 //Switchable tabs based on watch/read status 
 //(finished, unfinished, all etc)
-const tabs = () => {
+const tabs = (unfinished, finished, mode) => {
     const toFinishBtn = document.querySelector(".toFinish");
     const finishedBtn = document.querySelector(".completed");
     const bothBtn = document.querySelector(".all");
@@ -111,7 +113,7 @@ const tabs = () => {
     //Renders the appropriate list and filters
     //Changes styling to highlight selected
     toFinishBtn.addEventListener("click", () => {
-        renderWatchList(unfinished);
+        renderWatchList(unfinished, unfinished, finished);
         renderFilter(unfinished);
         mode = 0;
         toFinishBtn.style.fontSize = largeText;
@@ -127,7 +129,7 @@ const tabs = () => {
     });
 
     finishedBtn.addEventListener("click", () => {
-        renderWatchList(finished);
+        renderWatchList(finished, unfinished, finished);
         renderFilter(finished);
         mode = 1;
         toFinishBtn.style.fontSize = normalText;
@@ -142,8 +144,8 @@ const tabs = () => {
     });
 
     bothBtn.addEventListener("click", () => {
-        renderWatchList(both);
-        renderFilter(both);
+        renderWatchList(unfinished.concat(finished), unfinished, finished);
+        renderFilter(unfinished.concat(finished));
         mode = 2;
         toFinishBtn.style.fontSize = normalText;
         toFinishBtn.style.padding = normalPadding;
@@ -239,17 +241,17 @@ const filterGenres = (items) => {
     }
 }
 
-//Adds event listener to Go button and invokes immediately
-(function() {
+//Adds event listener to Go button
+const activateGo = (unfinished, finished, mode) => {
     const goBtn = document.querySelector("#go");
     goBtn.addEventListener("click", () => {
-        filterLogic(mode);
+        filterLogic(unfinished, finished, mode);
     })
-}())
+}
 
 //Finds matching data based on user selected filters
 //Activates on "Go"
-const filterLogic = (mode) => {
+const filterLogic = (unfinished, finished, mode) => {
     let copy = null;
 
     //Sets the tempcopy to filter
@@ -259,7 +261,7 @@ const filterLogic = (mode) => {
     } else if (mode === 1) {
         copy = finished;
     } else {
-        copy = both;
+        copy = unfinished.concat(finished);
     }
     const arrayOfFilters =  document.querySelectorAll("input[type=checkbox]");
     
@@ -295,11 +297,29 @@ const filterLogic = (mode) => {
         copy = copy.filter(element => anyInList(element.genres, allGenresChosen));
     }
 
-    renderWatchList(copy);
+    //Filter by year
+    const year = document.querySelector("#yearSelect").value;
+
+    if (year !== "All") {
+        copy = copy.filter(element => element.seasonYear === Number(year));
+    }
+
+
+    renderWatchList(copy, unfinished, finished);
 
 }
 
+const checkToAdd = (watchList) => {
+    const item = sessionStorage.getItem("toAdd");
+    if (item !== "null" && item !== null) {
+        watchList.push(JSON.parse(item));
+        localStorage.setItem("unfinished",JSON.stringify(watchList));
+    }
+    sessionStorage.setItem("toAdd", "null");
+}
 
-renderWatchList(unfinished);
-renderFilter(unfinished);
-tabs();
+// renderWatchList(unfinished);
+// renderFilter(unfinished);
+// tabs();
+
+export {renderFilter, renderWatchList, tabs, activateGo, checkToAdd};

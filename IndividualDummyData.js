@@ -1680,6 +1680,6 @@ const manga2 = {
     }
 }
 
-const allList = [anime1, anime2, anime3, anime4, manga1, manga2];
+const allList = [/*anime1,*/ anime2, anime3, anime4, manga1, manga2];
 
 export {anime1, anime2, anime3, anime4, manga1, manga2, allList};

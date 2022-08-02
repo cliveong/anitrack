@@ -1,10 +1,7 @@
 import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyData.js";
 
-const itemInfo = anime3;
-console.log(itemInfo);
-
 //Generate poster image and banner image of selected anime
-const renderTitle = () => {
+const renderTitle = (itemInfo) => {
     const picture = itemInfo.coverImage.extraLarge;
     const name = itemInfo.title.english;
 
@@ -18,15 +15,46 @@ const renderTitle = () => {
     const title = document.querySelector(".itemTitle");
     title.textContent = name;
 
+    addBtnLogic(itemInfo);
+}
+
+const addBtnLogic = (itemInfo) => {
     const btn = document.querySelector(".addToWatchList");
+    const unfinished = localStorage.getItem("unfinished");
+    const finished = localStorage.getItem("finished");
+    
     if (itemInfo.type === "ANIME") {
         btn.textContent = "Add to watchlist";
     } else {
         btn.textContent = "Add to readlist";
     }
-
-    //TODO: Add to watchlist logic required
+    if(unfinished !== null) {
+        const unfinishedList = JSON.parse(unfinished);
+        for (let i = 0; i < unfinishedList.length; i++) {
+            if (unfinishedList[i].id === itemInfo.id) {
+                if (itemInfo.type === "ANIME") {
+                    btn.textContent = "Added to watchlist";
+                } else {
+                    btn.textContent = "Added to readlist";
+                }
+            }
+        }
+    }
+    if (finished !== null) {
+        const finishedList = JSON.parse(finished);
+        for (let i = 0; i < finishedList.length; i++) {
+            if (finishedList[i].id === itemInfo.id) {
+                if (itemInfo.type === "ANIME") {
+                    btn.textContent = "Added to watchlist";
+                } else {
+                    btn.textContent = "Added to readlist";
+                }
+            }
+        }
+    }
+    
     btn.addEventListener("click", () => {
+        sessionStorage.setItem("toAdd", JSON.stringify(itemInfo));
         if (itemInfo.type === "ANIME") {
             btn.textContent = "Added to watchlist";
         } else {
@@ -37,18 +65,17 @@ const renderTitle = () => {
 
 
 //Adds the synopsis of content
-const renderInformation = () => {
+const renderInformation = (itemInfo) => {
     const summary =  itemInfo.description;
-    //const newSummary = summary.replaceAll("<br>", " ");
     const synopsis = document.querySelector(".synopsis");
     synopsis.innerHTML = summary;
 
-    generateGenres();
-    generateRelations();
+    generateGenres(itemInfo);
+    generateRelations(itemInfo);
 }
 
 //Adds the genres of content
-const generateGenres = () => {
+const generateGenres = (itemInfo) => {
     const genreList =  itemInfo.genres;
     const genres = document.querySelector(".genres");
 
@@ -61,7 +88,7 @@ const generateGenres = () => {
 }
 
 //Adds the relate manga/anime/source of content
-const generateRelations = () => {
+const generateRelations = (itemInfo) => {
     const relationsList = itemInfo.relations.edges;
     const relations = document.querySelector(".relations");
 
@@ -74,7 +101,7 @@ const generateRelations = () => {
 
 //Adds the misc info of content, content options changes
 //based on type (anime, manga)
-const renderScorebox = () => {
+const renderScorebox = (itemInfo) => {
     const score = document.querySelector(".score");
     const ranked = document.querySelector(".ranked");
     const popularity = document.querySelector(".popularity");
@@ -183,6 +210,13 @@ const renderScorebox = () => {
 
 }
 
-renderTitle();
-renderInformation();
-renderScorebox();
+const checkToDisplay = (itemInfo) => {
+    const item = sessionStorage.getItem("toDis");
+    console.log(item);
+    if (item !== null && item !== "null") {
+        return JSON.parse(item);
+    }
+    return itemInfo;
+}
+
+export { renderTitle, renderInformation, renderScorebox, checkToDisplay};
