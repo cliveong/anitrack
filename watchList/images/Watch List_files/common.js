@@ -1,7 +1,7 @@
 import { allList } from "../IndividualDummyData.js";
 import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyData.js";
 import { renderInformation, renderTitle, renderScorebox, checkToDisplay } from "./information page/script.js";
-import { renderFilter, renderWatchList, tabs, checkToAdd, activateGo } from "./watchList/watchList.js";
+import { renderFilter, renderWatchList, tabs, activateGo, checkToAdd } from "./watchList/watchList.js";
 
 let itemInfo = anime1;
 let unfinished = [allList[0], allList[1], allList[2]/*, allList[5]*/];
@@ -33,10 +33,10 @@ const infoPage = () => {
 
 const watchList = () => {
     checkToAdd(unfinished);
-    renderWatchList(unfinished, unfinished, finished, mode);
+    renderWatchList(unfinished, unfinished, finished);
     renderFilter(unfinished);
-    activateGo(unfinished, finished, mode);
-    mode = tabs(unfinished, finished, mode);
+    tabs(unfinished, finished, both, mode);
+    activateGo(unfinished, finished, both, mode);
 }
 
 const getUnfinishedFinishedArray = () => {
@@ -55,14 +55,9 @@ const getUnfinishedFinishedArray = () => {
     }
 }
 
-//Lets profile picture and navbarlogo lead directly to watchlist
 const pfCon = () => {
     const btn = document.querySelector(".profile");
     btn.addEventListener("click", () => {
-        location.href = "../watchList/watchList.html";
-    })
-    const btn2 = document.querySelector(".logo");
-    btn2.addEventListener("click", () => {
         location.href = "../watchList/watchList.html";
     })
 }

@@ -6,7 +6,7 @@ import { allList } from "../IndividualDummyData.js";
 // let mode = 0;
 
 //Render thumbnails in the watchlist based on list of "items"
-const renderWatchList = (items, unfinished, finished) => {
+const renderWatchList = (items, unfinished, finished, mode) => {
     //Remove all current thumbnails
     const listing = document.querySelector(".watchListThumbNail");
     while(listing.hasChildNodes()) {
@@ -28,8 +28,9 @@ const renderWatchList = (items, unfinished, finished) => {
         deleteBtn.className = "hover delete";
         deleteBtn.textContent = "Delete"
 
+        const tempCopy = JSON.parse(JSON.stringify(items[i]));
         viewBtn.addEventListener("click", () => {
-            sessionStorage.setItem("toDis", JSON.stringify(items[i]));
+            sessionStorage.setItem("toDis", JSON.stringify(tempCopy));
             window.location.href = "../information page/informationPage.html";
         })
         
@@ -50,7 +51,8 @@ const renderWatchList = (items, unfinished, finished) => {
             }
             
             markAsFinishBtn.addEventListener("click", () => {
-                markAsFinishListing(container.className);
+                markAsFinishListing(container.className, unfinished, finished,
+                     mode);
             })
 
             container.appendChild(markAsFinishBtn);
@@ -79,14 +81,14 @@ const deleteListing = (listingId, unfinished, finished) => {
 }
 
 //Mark item as read watchlist and update dom element
-const markAsFinishListing = (listingId, unfinished, finished) => {
-    if (mode === 0) {
-        const listing = document.querySelector(`.${listingId}`);
-        listing.parentElement.removeChild(listing);
-    } else {
+const markAsFinishListing = (listingId, unfinished, finished, mode) => {
+
+    const selection = document.querySelector(`.${listingId} > .read`) !== null;
+    if (selection) {
         const listing = document.querySelector(`.${listingId} > .read`);
         listing.parentElement.removeChild(listing);
     }
+    
     for(let j = 0; j < unfinished.length; j++) {
         if (unfinished[j].id === Number(listingId.substring(1))) {
             finished.push(unfinished[j]);
@@ -113,7 +115,7 @@ const tabs = (unfinished, finished, mode) => {
     //Renders the appropriate list and filters
     //Changes styling to highlight selected
     toFinishBtn.addEventListener("click", () => {
-        renderWatchList(unfinished, unfinished, finished);
+        renderWatchList(unfinished, unfinished, finished, mode);
         renderFilter(unfinished);
         mode = 0;
         toFinishBtn.style.fontSize = largeText;
@@ -125,11 +127,13 @@ const tabs = (unfinished, finished, mode) => {
         bothBtn.style.fontSize = normalText;
         bothBtn.style.padding = normalPadding;
         bothBtn.style.backgroundColor = normBgColor;
+        activateGo(unfinished, finished, mode);
+        return mode;
 
     });
 
     finishedBtn.addEventListener("click", () => {
-        renderWatchList(finished, unfinished, finished);
+        renderWatchList(finished, unfinished, finished, mode);
         renderFilter(finished);
         mode = 1;
         toFinishBtn.style.fontSize = normalText;
@@ -141,10 +145,12 @@ const tabs = (unfinished, finished, mode) => {
         bothBtn.style.fontSize = normalText;
         bothBtn.style.padding = normalPadding;
         bothBtn.style.backgroundColor = normBgColor;
+        activateGo(unfinished, finished, mode);
+        return mode;
     });
 
     bothBtn.addEventListener("click", () => {
-        renderWatchList(unfinished.concat(finished), unfinished, finished);
+        renderWatchList(unfinished.concat(finished), unfinished, finished, mode);
         renderFilter(unfinished.concat(finished));
         mode = 2;
         toFinishBtn.style.fontSize = normalText;
@@ -156,6 +162,8 @@ const tabs = (unfinished, finished, mode) => {
         bothBtn.style.fontSize = largeText;
         bothBtn.style.padding = largePadding;
         bothBtn.style.backgroundColor = largeBgColor;
+        activateGo(unfinished, finished, mode);
+        return mode;
     });
 }
 
@@ -188,6 +196,10 @@ const filterYear = (items) => {
             if (!tempYearList.includes(items[i].seasonYear)) {
                 tempYearList.push(items[i].seasonYear);
             }           
+        } else if (!(items[i].startDate.year === null)) {
+            if (!tempYearList.includes(items[i].startDate.year)) {
+                tempYearList.push(items[i].startDate.year);
+            } 
         }
     }
 
@@ -230,6 +242,7 @@ const filterGenres = (items) => {
         const tempInput = document.createElement('input');
         const tempLabel = document.createElement('label');
         tempInput.type = "checkbox";
+        tempInput.checked = true;
         tempInput.name = tempGenreList[j];
         tempInput.id = tempGenreList[j];
         tempLabel.htmlFor = tempGenreList[j];
@@ -243,19 +256,24 @@ const filterGenres = (items) => {
 
 //Adds event listener to Go button
 const activateGo = (unfinished, finished, mode) => {
+    console.log(mode);
     const goBtn = document.querySelector("#go");
+    if (goBtn.className === "true") {
+        goBtn.removeEventListener("click", () => {
+            filterLogic(unfinished, finished, mode)
+        });
+    }
     goBtn.addEventListener("click", () => {
-        filterLogic(unfinished, finished, mode);
-    })
+        filterLogic(unfinished, finished, mode)
+    });
 }
 
 //Finds matching data based on user selected filters
 //Activates on "Go"
 const filterLogic = (unfinished, finished, mode) => {
-    let copy = null;
-
     //Sets the tempcopy to filter
     //Note this only makes a shallow copy
+    let copy = null;
     if (mode === 0) {
         copy = unfinished;
     } else if (mode === 1) {
@@ -301,13 +319,14 @@ const filterLogic = (unfinished, finished, mode) => {
     const year = document.querySelector("#yearSelect").value;
 
     if (year !== "All") {
-        copy = copy.filter(element => element.seasonYear === Number(year));
+        copy = copy.filter(element => (element.seasonYear === Number(year) 
+        || element.startDate.year === Number(year)));
     }
 
-
-    renderWatchList(copy, unfinished, finished);
+    renderWatchList(copy, unfinished, finished, mode);
 
 }
+
 
 const checkToAdd = (watchList) => {
     const item = sessionStorage.getItem("toAdd");
@@ -322,4 +341,4 @@ const checkToAdd = (watchList) => {
 // renderFilter(unfinished);
 // tabs();
 
-export {renderFilter, renderWatchList, tabs, activateGo, checkToAdd};
+export {renderFilter, renderWatchList, tabs, checkToAdd, activateGo};
