@@ -10,7 +10,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
       hasNextPage
       perPage
     }
-    media (id: $id, search: $search, type: ANIME) {
+    media (id: $id, search: $search) {
       id
       title {
         romaji
@@ -21,14 +21,101 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
           extraLarge
       }
       type
+      status
+      season
+      seasonYear
+      format
+      episodes
+      genres
+      rankings {
+        rank
+      }
+      countryOfOrigin
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
+      averageScore
+      popularity
+      chapters
+      volumes
+      description
+      synonyms
+      characters(page: 1, perPage: 6) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node { # The character data node
+            id
+            name {
+              first
+              last
+            }
+          }
+          role
+          voiceActors (language: JAPANESE) { # Array of voice actors of this character for the anime
+            id
+            name {
+              first
+              last
+            }
+          }
+        }
+      }
+      reviews(page: 1, perPage: 6) {
+        pageInfo {
+          total
+          perPage
+          currentPage
+          lastPage
+          hasNextPage
+        }
+        edges {
+          node {
+            user {
+              name
+              avatar {
+                large
+              }
+            }
+            rating
+            score
+            summary
+          }
+        }
+      }
+      relations {
+        edges {
+          node {
+            title {
+              english
+            }
+            id
+            type
+          }
+        }
+      }
     }
   }
 }
 `;
 
+// "Yuukaku-hen"
+
 // Define our query variables and values that will be used in the query request
 var variables = {
-    search: "Yuukaku-hen",
+    search: "nisekoi",
     page: 1,
     perPage: 10,
 };
