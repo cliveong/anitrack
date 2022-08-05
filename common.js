@@ -70,6 +70,8 @@ const dropdownApi = () => {
         }, 300);
         console.log(timeout);
     });
+
+    //remove drop down if lost focus
     search.addEventListener("focusout", () => {
         search.value = "";
         const dropdown = document.querySelector("#searchData");
@@ -78,6 +80,7 @@ const dropdownApi = () => {
     })
 }
 
+//make api query based on user input
 const findOptions = (userInput) => {
     //console.log(userInput);
     let query = `
@@ -211,16 +214,20 @@ const findOptions = (userInput) => {
             variables: variables
         })
     };
+
+    // Make the HTTP Api request
     fetch(url, options).then(handleResponse)
     .then(handleData)
     .catch(handleError);
 
+    //Promises to handle data
     function handleResponse(response) {
         return response.json().then(function (json) {
             return response.ok ? json : Promise.reject(json);
         });
     }
 
+    //Adjust dropdown options size/pos base on search
     function handleData(data) {
         const dataArray = data.data.Page.media;
         const dropdown = document.querySelector("#searchData");
@@ -232,9 +239,11 @@ const findOptions = (userInput) => {
         while(dropdown.hasChildNodes()) {
             dropdown.removeChild(dropdown.lastChild);
         };
+        //if results avail
         if (dataArray.length > 0) {
             dataArray.forEach(element => generateOptions(element));
         } else {
+            //remove dropdown if no search terms
             if (userInput.length < 1) {
                 const dropdown = document.querySelector("#searchData");
                 dropdown.style.display = "none";   
@@ -245,6 +254,7 @@ const findOptions = (userInput) => {
         }
     }
 
+    //if no anime/manga from search
     function noResultsFound() {
         const option = document.createElement("div");
         const optionRight = document.createElement("div");
@@ -262,6 +272,7 @@ const findOptions = (userInput) => {
 
     }
     
+    //populate the dropdown with pic and name
     function generateOptions(element) {
         console.log(element.title.romaji);
         const option = document.createElement("div");
@@ -291,6 +302,7 @@ const findOptions = (userInput) => {
         dropdown.style.display = "block";
         dropdown.appendChild(option);
 
+        //click on dropdown item to view in info page
         const itemCopy = JSON.parse(JSON.stringify(element));
         option.addEventListener("click", () => {
             sessionStorage.setItem("toDis", JSON.stringify(itemCopy));
