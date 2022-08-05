@@ -29,6 +29,7 @@ const infoPage = () => {
     renderInformation(itemInfo);
     renderTitle(itemInfo);
     renderScorebox(itemInfo)
+    dropdownApi();
 }
 
 const watchList = () => {
@@ -37,34 +38,275 @@ const watchList = () => {
     renderFilter(unfinished);
     activateGo(unfinished, finished, mode);
     mode = tabs(unfinished, finished, mode);
+    dropdownApi();
 }
 
 const getUnfinishedFinishedArray = () => {
-    //console.log(JSON.parse(JSON.stringify(unfinished)));
     const getUnfinished = localStorage.getItem("unfinished");
     if (getUnfinished !== null) {
         unfinished = JSON.parse(getUnfinished);
-    } else {
-        //unfinished = [];
     }
     const getFinished = localStorage.getItem("finished");
     if (getFinished !== null) {
         finished = JSON.parse(getFinished);
-    } else {
-        //finished = [];
     }
 }
 
 //Lets profile picture and navbarlogo lead directly to watchlist
 const pfCon = () => {
-    const btn = document.querySelector(".profile");
+    const btn = document.querySelector(".profileContents");
     btn.addEventListener("click", () => {
         location.href = "../watchList/watchList.html";
     })
-    const btn2 = document.querySelector(".logo");
-    btn2.addEventListener("click", () => {
-        location.href = "../watchList/watchList.html";
+}
+
+const dropdownApi = () => {
+    const search = document.querySelector("#searchTitle");
+    let timeout = null;
+    search.addEventListener("keyup", () => {
+        clearTimeout(timeout);
+        timeout = setTimeout( () => {
+            findOptions(search.value);
+        }, 300);
+        console.log(timeout);
+    });
+    search.addEventListener("focusout", () => {
+        search.value = "";
+        const dropdown = document.querySelector("#searchData");
+        dropdown.style.display = "none";   
+
     })
 }
+
+const findOptions = (userInput) => {
+    //console.log(userInput);
+    let query = `
+    query ($id: Int, $page: Int, $perPage: Int, $search: String) {
+      Page (page: $page, perPage: $perPage) {
+        pageInfo {
+          total
+          currentPage
+          lastPage
+          hasNextPage
+          perPage
+        }
+        media (id: $id, search: $search) {
+          id
+          title {
+            romaji
+            english
+            native
+          }
+          coverImage {
+              extraLarge
+          }
+          type
+          status
+          season
+          seasonYear
+          format
+          episodes
+          genres
+          rankings {
+            rank
+          }
+          countryOfOrigin
+          startDate {
+            year
+            month
+            day
+          }
+          endDate {
+            year
+            month
+            day
+          }
+          averageScore
+          popularity
+          chapters
+          volumes
+          description
+          synonyms
+          characters(page: 1, perPage: 6) {
+            pageInfo {
+              total
+              perPage
+              currentPage
+              lastPage
+              hasNextPage
+            }
+            edges {
+              node { # The character data node
+                id
+                name {
+                  first
+                  last
+                }
+              }
+              role
+              voiceActors (language: JAPANESE) { # Array of voice actors of this character for the anime
+                id
+                name {
+                  first
+                  last
+                }
+              }
+            }
+          }
+          reviews(page: 1, perPage: 6) {
+            pageInfo {
+              total
+              perPage
+              currentPage
+              lastPage
+              hasNextPage
+            }
+            edges {
+              node {
+                user {
+                  name
+                  avatar {
+                    large
+                  }
+                }
+                rating
+                score
+                summary
+              }
+            }
+          }
+          relations {
+            edges {
+              node {
+                title {
+                  english
+                }
+                id
+                type
+              }
+            }
+          }
+        }
+      }
+    }
+    `;
+
+    // Define our query variables and values that will be used in the query request
+    let variables = {
+        search: userInput,
+        page: 1,
+        perPage: 10,
+    };
+
+    // Define the config we'll need for our Api request
+    let url = 'https://graphql.anilist.co',
+    options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: query,
+            variables: variables
+        })
+    };
+    fetch(url, options).then(handleResponse)
+    .then(handleData)
+    .catch(handleError);
+
+    function handleResponse(response) {
+        return response.json().then(function (json) {
+            return response.ok ? json : Promise.reject(json);
+        });
+    }
+
+    function handleData(data) {
+        const dataArray = data.data.Page.media;
+        const dropdown = document.querySelector("#searchData");
+        const searchBar = document.querySelector("#searchTitle");
+        const searchPos = searchBar.getBoundingClientRect();
+        dropdown.style.top = searchPos.bottom+5 + "px";
+        dropdown.style.left = searchPos.left + "px";
+        dropdown.style.width = searchBar.offsetWidth-15 + "px";
+        while(dropdown.hasChildNodes()) {
+            dropdown.removeChild(dropdown.lastChild);
+        };
+        if (dataArray.length > 0) {
+            dataArray.forEach(element => generateOptions(element));
+        } else {
+            if (userInput.length < 1) {
+                const dropdown = document.querySelector("#searchData");
+                dropdown.style.display = "none";   
+            } else {
+                noResultsFound();
+            }
+
+        }
+    }
+
+    function noResultsFound() {
+        const option = document.createElement("div");
+        const optionRight = document.createElement("div");
+        const optionRightUpper = document.createElement("div");
+        optionRightUpper.textContent = "No results found";
+        optionRight.appendChild(optionRightUpper);
+        const optionRightLower = document.createElement("div");
+        optionRightLower.textContent = "Try another search";
+        optionRight.appendChild(optionRightLower);
+        option.appendChild(optionRight);
+        option.className = "searchOptions";
+        const dropdown = document.querySelector("#searchData");
+        dropdown.style.display = "block";
+        dropdown.appendChild(option);
+
+    }
+    
+    function generateOptions(element) {
+        console.log(element.title.romaji);
+        const option = document.createElement("div");
+        const optionLeft = document.createElement("div");
+        let img = document.createElement("img");
+        img.src = element.coverImage.extraLarge;
+        optionLeft.appendChild(img);
+        const optionRight = document.createElement("div");
+        const optionRightUpper = document.createElement("div");
+        let name = null;
+        if (element.title.english) {
+            name = element.title.english;
+        } else if (element.title.romaji) {
+            name = element.title.romaji;
+        } else {
+            name = element.title.native
+        }
+        optionRightUpper.textContent = name;
+        optionRight.appendChild(optionRightUpper);
+        const optionRightLower = document.createElement("div");
+        optionRightLower.textContent = `${element.type}, ${element.startDate.year}`;
+        optionRight.appendChild(optionRightLower);
+        option.appendChild(optionLeft);
+        option.appendChild(optionRight);
+        option.className = "searchOptions";
+        const dropdown = document.querySelector("#searchData");
+        dropdown.style.display = "block";
+        dropdown.appendChild(option);
+
+        const itemCopy = JSON.parse(JSON.stringify(element));
+        option.addEventListener("click", () => {
+            sessionStorage.setItem("toDis", JSON.stringify(itemCopy));
+            location.href = "../information page/informationPage.html"
+        });
+
+    }
+    
+    function handleError(error) {
+        alert('Error, check console');
+        console.error(error);
+    }
+};
+
+
+
+
 
 app();

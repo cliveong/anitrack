@@ -3,7 +3,14 @@ import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyDat
 //Generate poster image and banner image of selected anime
 const renderTitle = (itemInfo) => {
     const picture = itemInfo.coverImage.extraLarge;
-    const name = itemInfo.title.english;
+    let name = null;
+    if (itemInfo.title.english) {
+        name = itemInfo.title.english;
+    } else if (itemInfo.title.romaji) {
+        name = itemInfo.title.romaji;
+    } else {
+        name = itemInfo.title.native
+    }
 
     const mainPic = document.querySelector(".titlePic");
     mainPic.src = picture;
@@ -54,6 +61,9 @@ const addBtnLogic = (itemInfo) => {
     }
     
     btn.addEventListener("click", () => {
+        if (btn.textContent.substring(0,5) === "Added") {
+            return;
+        } 
         sessionStorage.setItem("toAdd", JSON.stringify(itemInfo));
         if (itemInfo.type === "ANIME") {
             btn.textContent = "Added to watchlist";
@@ -115,7 +125,12 @@ const renderScorebox = (itemInfo) => {
     const chapters = document.querySelector(".chapters");
     
     const itemScore = itemInfo.averageScore;
-    const itemRanked = itemInfo.rankings[0].rank;
+    let itemRanked = null;
+    if (itemInfo.rankings.length > 0) {
+        itemRanked = itemInfo.rankings[0].rank;
+    } else {
+        itemRanked = "Unknown";
+    }
     const itemPopularity = itemInfo.popularity + " members";
     const itemEpisodes = itemInfo.episodes;
     const itemStatus = itemInfo.status;
