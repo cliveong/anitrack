@@ -1,10 +1,3 @@
-import { allList } from "../IndividualDummyData.js";
-
-// const unfinished = [allList[0], allList[1], allList[2], allList[5]];
-// const finished = [allList[3], allList[4]];
-// const both = unfinished.concat(finished);
-// let mode = 0;
-
 //Render thumbnails in the watchlist based on list of "items"
 const renderWatchList = (items, unfinished, finished, mode) => {
     //Remove all current thumbnails
@@ -31,7 +24,7 @@ const renderWatchList = (items, unfinished, finished, mode) => {
         const tempCopy = JSON.parse(JSON.stringify(items[i]));
         viewBtn.addEventListener("click", () => {
             sessionStorage.setItem("toDis", JSON.stringify(tempCopy));
-            window.location.href = "../information page/informationPage.html";
+            window.location.href = "./html/informationPage.html";
         })
         
         deleteBtn.addEventListener("click", () => {
@@ -105,8 +98,8 @@ const tabs = (unfinished, finished, mode) => {
     const toFinishBtn = document.querySelector(".toFinish");
     const finishedBtn = document.querySelector(".completed");
     const bothBtn = document.querySelector(".all");
-    const largeText = "1.8rem";
-    const normalText = "1.3rem";
+    const largeText = "1.3rem";
+    const normalText = "1rem";
     const largePadding = "10px 10px";
     const normalPadding = "16px 16px";
     const largeBgColor = "gray";

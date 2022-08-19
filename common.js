@@ -1,7 +1,7 @@
-import { allList } from "../IndividualDummyData.js";
-import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyData.js";
-import { renderInformation, renderTitle, renderScorebox, checkToDisplay } from "./information page/script.js";
-import { renderFilter, renderWatchList, tabs, checkToAdd, activateGo } from "./watchList/watchList.js";
+import { allList } from "./scripts/IndividualDummyData.js";
+import { anime1,anime2,anime3,anime4,manga1,manga2 } from "./scripts/IndividualDummyData.js";
+import { renderInformation, renderTitle, renderScorebox, checkToDisplay } from "./scripts/infopage.js";
+import { renderFilter, renderWatchList, tabs, checkToAdd, activateGo } from "./scripts/watchList.js";
 
 let itemInfo = anime1;
 let unfinished = [allList[0], allList[1], allList[2]/*, allList[5]*/];
@@ -14,13 +14,38 @@ const app = () => {
     const body = document.querySelector("body");
     const bodyId = body.id;
     getUnfinishedFinishedArray();
-    pfCon();
     switch (bodyId) {
         case "ip":
+          screenWidth();
+            pfCon2();
             infoPage();
+            break;
         case "wl":
+          screenWidth();
+            pfCon();
             watchList();
+            break;
     }
+
+}
+
+const screenWidth = () => {
+  // let width = window.innerWidth;
+  // let height = window.innerHeight;
+  // let min = 9/16;
+  // let max = (16/9)-(min);
+  // let currentRatio = (width/height) - (9/16);
+  // let calc1 = currentRatio / max;
+  // let calc2 = 85 - (calc1 * 20);
+   const content = document.querySelector(".content");
+  // if (calc2 < 50) {
+  //   calc2 = 50;
+  // }
+  // if (calc2 > 80) {
+  //   calc2 = 80;
+  // }
+  // content.style.width = calc2 + "%";
+  content.style.width = screen.width/2 + "px";
 
 }
 
@@ -45,10 +70,14 @@ const getUnfinishedFinishedArray = () => {
     const getUnfinished = localStorage.getItem("unfinished");
     if (getUnfinished !== null) {
         unfinished = JSON.parse(getUnfinished);
+    } else {
+        localStorage.setItem("unfinished", JSON.stringify(unfinished));
     }
     const getFinished = localStorage.getItem("finished");
     if (getFinished !== null) {
         finished = JSON.parse(getFinished);
+    } else {
+        localStorage.setItem("finished", JSON.stringify(finished));
     }
 }
 
@@ -56,8 +85,23 @@ const getUnfinishedFinishedArray = () => {
 const pfCon = () => {
     const btn = document.querySelector(".profileContents");
     btn.addEventListener("click", () => {
-        location.href = "../watchList/watchList.html";
-    })
+        window.location.href = "./index.html";
+    });
+    const btn2 = document.querySelector(".logo");
+    btn2.addEventListener("click", () => {
+        window.location.href = "./index.html";
+    });
+}
+
+const pfCon2 = () => {
+  const btn = document.querySelector(".profileContents");
+  btn.addEventListener("click", () => {
+      location.href = "../index.html";
+  });
+  const btn2 = document.querySelector(".logo");
+  btn2.addEventListener("click", () => {
+      location.href = "../index.html";
+  });
 }
 
 const dropdownApi = () => {
@@ -70,17 +114,17 @@ const dropdownApi = () => {
         }, 300);
         console.log(timeout);
     });
-
-    //remove drop down if lost focus
     search.addEventListener("focusout", () => {
-        search.value = "";
-        const dropdown = document.querySelector("#searchData");
-        dropdown.style.display = "none";   
+        setTimeout( () => {
+            const dropdown = document.querySelector("#searchData");
+            dropdown.style.display = "none";
+        }, 300);
+        //const dropdown = document.querySelector("#searchData");
+        //dropdown.style.display = "none";   
 
-    })
+    });
 }
 
-//make api query based on user input
 const findOptions = (userInput) => {
     //console.log(userInput);
     let query = `
@@ -93,7 +137,7 @@ const findOptions = (userInput) => {
           hasNextPage
           perPage
         }
-        media (id: $id, search: $search) {
+        media (id: $id, search: $search, isAdult: false) {
           id
           title {
             romaji
@@ -239,7 +283,7 @@ const findOptions = (userInput) => {
         while(dropdown.hasChildNodes()) {
             dropdown.removeChild(dropdown.lastChild);
         };
-        //if results avail
+        //if results
         if (dataArray.length > 0) {
             dataArray.forEach(element => generateOptions(element));
         } else {
@@ -274,7 +318,6 @@ const findOptions = (userInput) => {
     
     //populate the dropdown with pic and name
     function generateOptions(element) {
-        console.log(element.title.romaji);
         const option = document.createElement("div");
         const optionLeft = document.createElement("div");
         let img = document.createElement("img");
@@ -298,17 +341,30 @@ const findOptions = (userInput) => {
         option.appendChild(optionLeft);
         option.appendChild(optionRight);
         option.className = "searchOptions";
+        
+        //click to view
+        const itemCopy = JSON.parse(JSON.stringify(element));
+        option.addEventListener("click", () => {
+          console.log(12345);
+          sessionStorage.setItem("toDis", JSON.stringify(itemCopy));
+          const body = document.querySelector("body");
+          const bodyId = body.id;
+          window.location.href = "../html/informationPage.html";
+          // console.log(bodyId);
+          // switch (bodyId) {
+          //   case "ip":
+          //     window.location.href = "../html/informationPage.html";
+          //     break;
+          //   case "wl":
+          //     console.log("./html/informationPage.html");
+          //     window.location.href = "./html/informationPage.html";
+          //     break;
+          //}
+        });
+            
         const dropdown = document.querySelector("#searchData");
         dropdown.style.display = "block";
         dropdown.appendChild(option);
-
-        //click on dropdown item to view in info page
-        const itemCopy = JSON.parse(JSON.stringify(element));
-        option.addEventListener("click", () => {
-            sessionStorage.setItem("toDis", JSON.stringify(itemCopy));
-            location.href = "../information page/informationPage.html"
-        });
-
     }
     
     function handleError(error) {
