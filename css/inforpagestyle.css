@@ -1,0 +1,118 @@
+.title {
+    grid-row: 2/3;
+    grid-column: 1/2;
+}
+
+.information {
+    grid-row: 3/4;
+}
+
+.title {
+    padding: 20px;
+    display: flex;
+}
+
+.title>img {
+    height: 100%;
+    width: auto;
+    max-width: 40%;
+    object-fit: cover;
+}
+
+.description {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url('../images/demon-slayer.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #202020;
+    width: 100%;
+    padding: 30px;
+    background-color: white;
+    overflow: clip;
+}
+
+.profileContents div a:link {
+    color: white;
+}
+
+.profileContents div a:visited {
+    color: rgb(243, 88, 246);
+}
+
+.information {
+    padding: 20px;
+}
+
+.writtenInformation{
+    padding: 20px;
+    padding-top: 5px;
+    background-color: var(--darkgrey);
+}
+
+.writteninformation>div{
+    padding: 16px 16px;
+}
+
+.synopsis {
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.infoHeaders {
+    font-size: 1.8rem;
+    margin: 20px 0;
+}
+
+.genres {
+    display: flex;
+    gap: 14px;
+    font-size: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.genreBars {
+    font-weight: 400;
+    background-color: #757575;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.scorebox {
+    padding: 20px;
+}
+
+.scorebox >div {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: left;
+    font-size: 1rem;
+    background-color: var(--darkgrey);
+}
+
+.scorebox>div>:first-child {
+    margin-bottom: 10px;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    width: 100%;
+    text-align: left;
+    color: var(--red);
+}
+
+.addToWatchList {
+    margin-top: 30px;
+    width: 250px;
+    height: 80px;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    font-family: "Audiowide";
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    background-color: white;
+    transition-duration: 0.2s;
+}
+
+button:hover {
+    background-color: #2C2C2C;
+    color: white;
+}

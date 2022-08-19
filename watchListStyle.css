@@ -5,18 +5,20 @@ body {
 
     font-family: 'Audiowide', cursive, sans-serif;
     width: 100vw;
-    max-width: 4096px;
-    min-width: 600px;
     height: 100vh;
     background-color: var(--black);
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .content {
     display: grid;
-    grid-template-rows: 2.5fr 500px 12fr;
-    grid-template-columns: minmax(450px,27fr) 9fr;
-    width: 100vw;
+    grid-template-rows: 1.5fr 350px 12fr;
+    grid-template-columns: 27fr 9fr;
+    width: 50vw;
+    min-width: 1060px;
     height: 100vh;
 }
 
@@ -25,17 +27,17 @@ body {
     grid-column: 1/3;
     display: flex;
     align-items: flex-end;
-    padding: 20px 100px 20px 20px;
+    padding: 20px 20px 20px 20px;
     justify-content: space-between;
     border-bottom: 3px solid var(--red);
 }
 
 .logo {
-    font-size: 3.5rem;
+    font-size: 3rem;
 }
 
 .logo>img {
-    width: 100px;
+    width: 80px;
 }
 
 .logOut {
@@ -48,6 +50,7 @@ body {
     border: 3px solid var(--red);
     background-color: var(--black);
     transition: 0.3s;
+    display: none;
 }
 
 .logOut:hover {
@@ -56,8 +59,8 @@ body {
 }
 
 .searchBar {
-    font-size: 2rem;
-    margin-left: 10px;
+    font-size: 1.8rem;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -130,9 +133,9 @@ body {
 }
 
 #searchTitle {
-    width: 30vw;
-    min-width: 200px;
-    height: 50px;
+    width: 25vw;
+    min-width: 180px;
+    height: 45px;
     border-radius: 30px;
     padding: 0px 50px;
     font-size: 2rem;
@@ -152,13 +155,15 @@ body {
 }
 
 .recommended {
-    padding: 30px;
+    padding: 20px;
     display: flex;
 }
 
 .recommended>img {
     height: 100%;
     width: auto;
+    max-width: 40%;
+    object-fit: cover;
 }
 
 .description {
@@ -169,26 +174,27 @@ body {
     background-color: #202020;
     width: 100%;
     padding: 30px;
-    overflow: clip;
+    overflow-y: scroll;
 }
 
 .description > :first-child {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.8rem;
     margin-bottom: 20px;
 }
 
 .description > :nth-child(2) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 500;
+    margin-bottom: 10px;
 }
 
 .description > :last-child {
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
 
 .profile {
-    padding: 30px;
+    padding: 20px;
 }
 
 .profileContents {
@@ -198,10 +204,8 @@ body {
     align-items: center;
     padding: 10px;
     background-color: var(--darkgrey);
-    aspect-ratio: 1/1;
+    /* aspect-ratio: 1/1; */
     max-height: 100%;
-    
-
 }
 
 .profileContents>img {
@@ -216,13 +220,13 @@ body {
 }
 
 .watchList {
-    padding: 30px;
+    padding: 20px;
 }
 
 .tabs {
     display: flex;
     gap: 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     width: 100%;
     border-bottom: 2px solid white;
     margin-bottom: 20px;
@@ -242,14 +246,14 @@ body {
 
 .watchListThumbNail{
     display: grid;
-    grid-template-columns: repeat(auto-fill, 360px);
-    grid-template-rows: repeat(auto-fill, 480px);
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, 225px);
+    grid-template-rows: repeat(auto-fill, 300px);
+    gap: 20px;
 }
 
 .watchListThumbNail>div{
-    width: 360px;
-    height: 480px;
+    width: 225px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -309,9 +313,9 @@ body {
 
 .watchListThumbNail>div>button {
     font-family: "Audiowide";
-    width: 200px;
-    height: 80px;
-    font-size: 1.6rem;
+    width: 135px;
+    height: 52.5px;
+    font-size: 1.2rem;
     border-radius: 10px;
     background-color: white;
     color: #360000;
@@ -334,12 +338,12 @@ body {
 }
 
 .filters {
-    padding: 30px;
+    padding: 20px;
 }
 
 .filterPanel {
     background-color: var(--darkgrey);
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
 
 .year {
@@ -367,12 +371,12 @@ body {
     padding: 10px;
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
-    gap: 10px;
+    gap: 15px;
     width: 100%;
 }
 
 input[type='checkbox'] {
-    transform: scale(2.2);
+    transform: scale(1.5);
     margin-left: 30px;
     margin-right: 10px;
 }
@@ -384,7 +388,7 @@ input[id='Anime'], input[id='Manga']{
 select {
     width: 100px;
     height: 38px;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 /* label[for="yearSelect"] {
@@ -392,7 +396,7 @@ select {
 } */
 
 .year > button {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     background-color: white;
     color: #360000;
     border-radius: 5px;

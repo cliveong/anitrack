@@ -1,5 +1,3 @@
-import { anime1,anime2,anime3,anime4,manga1,manga2 } from "../IndividualDummyData.js";
-
 //Generate poster image and banner image of selected anime
 const renderTitle = (itemInfo) => {
     const picture = itemInfo.coverImage.extraLarge;
@@ -47,6 +45,7 @@ const addBtnLogic = (itemInfo) => {
             }
         }
     }
+
     if (finished !== null) {
         const finishedList = JSON.parse(finished);
         for (let i = 0; i < finishedList.length; i++) {
