@@ -10,6 +10,8 @@ A small little project done towards to end of summer to see what I have learned 
 
 Vanilla JS was used to test the extent of what I have learned while attempting [The Odin Project](https://www.theodinproject.com/)
 
+Anime/Manga information is pulled from [Anilist Api](https://anilist.gitbook.io/anilist-apiv2-docs/)
+
 Storage of user watchlist data is done via [Window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 ## Screenshots

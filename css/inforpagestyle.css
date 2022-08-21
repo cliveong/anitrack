@@ -100,11 +100,11 @@
     color: var(--red);
 }
 
-.addToWatchList {
+#addToWatchList {
     margin-top: 30px;
-    width: 250px;
-    height: 80px;
-    font-size: 1.5rem;
+    width: 225px;
+    height: 72px;
+    font-size: 1.1rem;
     border-radius: 10px;
     font-family: "Audiowide";
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
