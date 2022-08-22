@@ -8,7 +8,7 @@
 }
 
 .title {
-    padding: 20px;
+    padding: 10px;
     display: flex;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .information {
-    padding: 20px;
+    padding: 10px;
 }
 
 .writtenInformation{
@@ -78,7 +78,7 @@
 }
 
 .scorebox {
-    padding: 20px;
+    padding: 10px;
 }
 
 .scorebox >div {
